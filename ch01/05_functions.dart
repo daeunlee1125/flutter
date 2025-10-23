@@ -73,19 +73,16 @@ void main() {
   print('plus(3, 2) : ${plus(3, 2)}');
   print('minus(3, 2) : ${minus(3, 2)}');
 
-  // 이름이 있는 매개변수 (Named Parameter, {중괄호} 매개변수)
-
-
-  // 선택적 위치 매개변수 (Optional Positional Parameter, [대괄호] 매개변수)
-
 
   // 고차 함수 (함수를 매개변수로 전달받거나, 반환하는 함수)
 
   print("빼기 함수 전달 => ${calc(3, 1, subtract)}");
   print("더하기 함수 전달 => ${calc(3, 1, add)}");
 
-  print(createHello("이다은"));
+  print(createHello("이다은")());
 
+
+  // 이름이 있는 매개변수 (Named Parameter, {중괄호} 매개변수)
   person1();
   person1(name: "다은");
   print("");
@@ -96,7 +93,9 @@ void main() {
 
   person3(age: 22, "이다은");
   person3(hello: "안녕하십니까", age: 22, "이다은");
-  
+
+
+  // 선택적 위치 매개변수 (Optional Positional Parameter, [대괄호] 매개변수)
   user1("이다은");
   user1("이다은2", 22); // 위치바꿈 안 됨
   print("");
@@ -106,5 +105,6 @@ void main() {
   
   user3("정약용");
   user3("이다은", 34, "부산", "학생");
+
 
 }
