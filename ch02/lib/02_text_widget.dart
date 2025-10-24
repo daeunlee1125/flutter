@@ -47,25 +47,30 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /*
-          이미지 에셋 등록 설정 ⭐⭐
-           - pubspec.yaml > flutter: 하위에 assets 주석 제거 후,
-           이미지 경로 입력
-           */
-          Image.asset('images/flower1.jpg'),
-          Image.asset('images/flower2.jpg',
-          width: 200,
-          height: 200),
-          Image.asset('images/flower3.jpg',
-          width: 200,
-          height: 200,
-          fit: BoxFit.fill,
-          repeat: ImageRepeat.noRepeat),
-          Image.network(
-            "https://picsum.photos/id/237/200/300",
-            width: 100,
-            height: 100,
-
+          // 일반 텍스트 위젯
+          Text(
+            'Hello World',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent
+            ),),
+          Text('동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세!',
+            style: TextStyle(
+              fontSize: 16,
+              overflow: TextOverflow.ellipsis
+            )
+          ),
+          // 문자열 문자 스타일
+          Text.rich(
+            TextSpan(
+                text: 'HE',
+                children: [
+                  TextSpan(text: 'LLO', style: TextStyle(color: Colors.red)),
+                  TextSpan(text: 'WOR', style: TextStyle(color: Colors.blue)),
+                  TextSpan(text: 'LD', style: TextStyle(color: Colors.green))
+                ]
+            )
           )
         ],
 

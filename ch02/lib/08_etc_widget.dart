@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'i am title',
+      title: 'Text Widget Texxt',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Daeun\'s Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Daeun\'s Flutter Demo Page'),
     );
   }
 }
