@@ -44,18 +44,113 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Row : 내부의 위젯들을 가로로 배치하는 위젯
+          Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                color: Colors.red,
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                color: Colors.green,
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                color: Colors.blue,
+              )
+            ],
+          ),
+          
+          // Column : 내부의 위젯들을 세로로 배치하는 위젯
+          Column(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                color: Colors.red,
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                color: Colors.green,
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                color: Colors.blue,
+              )
+            ],
+          ),
+          
+          Row(
+            children: [
+              Column(
+                children: [
+                  Text('벚꽃'),
+                  Image.asset('images/flower1.jpg',
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.fill,)
+                ],
+              ),
+              Column(
+                children: [
+                  Text('코스모스'),
+                  Image.asset('images/flower2.jpg',
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.fill,)
+                ],
+              ),
+              Column(
+                children: [
+                  Text('해바라기'),
+                  Image.asset('images/flower3.jpg',
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.fill,)
+                ],
+              )
+            ],
 
-        child: Column(
+          ),
 
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Hello Flutter!'),
-            Text('Hello World!')
+          Container(
+            width: 400,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.yellow,
+              border: Border.all(width: 2)
+            ),
+            margin: EdgeInsets.symmetric(vertical: 10), // 위, 아래 여백 10
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // 기본축 정렬
+              crossAxisAlignment: CrossAxisAlignment.stretch, // 교차축 정렬
+              children: [
+                Container(width: 50,
+                height: 80,
+                color: Colors.redAccent,),
+                Container(width: 50,
+                  height: 50,
+                  color: Colors.greenAccent,),
+                Container(width: 50,
+                  height: 80,
+                  color: Colors.blueAccent,)
+              ],
+            ),
+          )
 
-          ],
-        ),
-      ),
+
+        ],
+
+      )
 
     );
   }
