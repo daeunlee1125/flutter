@@ -83,6 +83,7 @@ class ChildWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
+    print("createState...");
     return _ChildWidgetState();
   }
 
@@ -90,6 +91,23 @@ class ChildWidget extends StatefulWidget {
 
 // ChildWidget 구현 클래스
 class _ChildWidgetState extends State<ChildWidget> {
+  
+  // 상태 초기화
+  // API 서버와 통신 이뤄지는 단계
+  @override
+  void initState(){
+    // 위젯이 처음 트리에 삽입될 때 한 번만 호출
+    super.initState();
+    print("initState...");
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print("didChangeDependencies...");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container( 
@@ -100,6 +118,22 @@ class _ChildWidgetState extends State<ChildWidget> {
       child: Text('ChildWidget count : ${widget.count}',
       style: TextStyle(fontSize: 26),),
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant ChildWidget oldWidget) {
+    // 부모 위젯이 새 데이터와 함께 위젯을 rebuild할 때 호출
+    super.didUpdateWidget(oldWidget);
+    print('didUpdateWidget... old = ${oldWidget.count}, new = ${widget.count}');
+  }
+  
+
+  // 자원 해제해주는 단계
+  @override
+  void dispose() {
+    // 해당 위젯이 위젯 트리에서 제거될 때 호출
+    super.dispose();
+    print('dispose...');
   }
   
 }
