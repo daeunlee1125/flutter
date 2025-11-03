@@ -1,0 +1,84 @@
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:kmarket_shopping_app/models/product.dart';
+import 'package:kmarket_shopping_app/models/product_response.dart';
+import 'package:kmarket_shopping_app/screens/product/product_list_item.dart';
+import 'package:kmarket_shopping_app/services/product_service.dart';
+
+class ProductListScreen extends StatefulWidget{
+
+  final int categoryNum;
+  final String categoryName;
+
+  const ProductListScreen({super.key, required this.categoryNum, required this.categoryName});
+
+  @override
+  State<StatefulWidget> createState() => _ProductListScreenState();
+
+
+}
+
+class _ProductListScreenState extends State<ProductListScreen> {
+
+  List<Product> _productList = [];
+
+  final service = ProductService();
+  int _page = 1;
+  bool _isLoading = false;
+  bool _hasMore = true;
+
+  late Future<ProductResponse> _initProductFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 화면 빌드하기 전에 상품 목록 데이터 가져오기
+    _initProductFuture = _loadInitialProducts();
+
+  }
+
+  Future<ProductResponse> _loadInitialProducts() async {
+    final jsonData = await service.fetchProductList(widget.categoryNum, _page);
+    final productResponse = ProductResponse.fromJson(jsonData);
+    setState(() {
+      _productList.addAll(productResponse.dtoList);
+    });
+    
+    return productResponse;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('${widget.categoryName}(${widget.categoryNum}) 상품 목록'),),
+      body: FutureBuilder(
+          future: _initProductFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting){
+              return const Center(child: CircularProgressIndicator(),);
+
+            }
+            
+            if (snapshot.hasError) {
+              return Center(child: Text('에러 발생 : ${snapshot.error}'),);
+            }
+            
+            if (_productList.isEmpty){
+              return const Center(child: Text('상품이 없습니다.'),);
+            }
+            
+            return ListView.builder(
+                itemCount: _productList.length,
+                itemBuilder: (context, index){
+                  final product = _productList[index];
+                  return ProductListItem(product: product);
+                });
+          }
+      )
+    );
+  }
+
+}
