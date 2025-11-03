@@ -44,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
       log('accessToken : $accessToken');
 
       if (accessToken != null){
-        // 토큰 저장 (SharedPreference or SecurePreference)
 
+        // 토큰 저장 (SharedPreference or SecurePreference)
         context.read<AuthProvider>().login(accessToken);
 
         // 로그인 화면 닫기
