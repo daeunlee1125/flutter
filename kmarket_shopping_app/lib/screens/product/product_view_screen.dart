@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:kmarket_shopping_app/config/app_config.dart';
 import 'package:kmarket_shopping_app/models/cart.dart';
 import 'package:kmarket_shopping_app/models/product.dart';
+import 'package:kmarket_shopping_app/providers/auth_provider.dart';
+import 'package:kmarket_shopping_app/screens/member/login_screen.dart';
 import 'package:kmarket_shopping_app/services/cart_service.dart';
+import 'package:provider/provider.dart';
 
 class ProductViewScreen extends StatefulWidget{
   final Product product;
@@ -38,6 +41,8 @@ class _ProductViewScreenState extends State<ProductViewScreen>{
 
     // ProductViewScreen 속성 product 참조
     final product = widget.product;
+
+    final authProvider = Provider.of<AuthProvider>(context);
 
     final finalPrice = product.price * (1 - product.discount / 100);
 
@@ -114,7 +119,37 @@ class _ProductViewScreenState extends State<ProductViewScreen>{
             Row(
               children: [
                 Expanded(child: ElevatedButton.icon(
-                    onPressed: _addCart,
+                    onPressed: (){
+                      if (authProvider.isLoggedIn){
+                        _addCart();
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('로그인이 필요합니다'),
+                            content: const Text('장바구니에 상품을 담으려면 로그인이 필요합니다. 로그인 화면으로 이동하시겠습니까?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context), // 닫기
+                                child: const Text('취소'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // Alert 닫기
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
+                                    ),
+                                  );
+                                },
+                                child: const Text('로그인으로 이동'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                     label: const Text('장바구니'),
                   icon: Icon(Icons.shopping_cart),
                 )),

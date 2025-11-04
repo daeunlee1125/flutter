@@ -4,12 +4,38 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:kmarket_shopping_app/config/app_config.dart';
-import 'package:kmarket_shopping_app/models/cart.dart';
 import 'package:kmarket_shopping_app/services/token_storage_service.dart';
 
 class CartService{
 
   final _tokenStorageService = TokenStorageService();
+
+  Future<List<dynamic>> getCarts() async {
+
+    try{
+
+      final jwt = await _tokenStorageService.getToken();
+      log('jwt : $jwt');
+
+      final response = await http.get(
+          Uri.parse('${AppConfig.baseUrl}/cart'),
+        headers: {
+            "Content-Type": "application/json",
+          "Authorization": "Bearer $jwt"
+        }
+      );
+
+      if(response.statusCode == 200) {
+        return jsonDecode(response.body);
+
+      } else {
+        throw Exception(response.statusCode);
+      }
+
+    } catch(err){
+      throw Exception(err);
+    }
+  }
 
   Future<Map<String, dynamic>> addCart(int pno, int quantity) async {
     try {
@@ -41,5 +67,31 @@ class CartService{
       throw Exception(err);
     }
   }
+
+  Future<bool> deleteCart(int cartId) async {
+    try {
+
+      final jwt = await _tokenStorageService.getToken();
+      log('jwt : $jwt');
+
+      final response = await http.delete(Uri.parse('${AppConfig.baseUrl}/cart/$cartId'),
+          headers: {
+            "Content-Type" : "application/json",
+            "Authorization" : "Bearer$jwt"
+          },
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      }else {
+        throw Exception(response.statusCode);
+      }
+
+    } catch(err){
+      throw Exception(err);
+    }
+  }
+
+
 
 }
